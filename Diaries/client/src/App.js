@@ -1,36 +1,35 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [ like , setLike] = useState(0)
-  const [isLike , setIsLike] = useState(false)
+  const [like, setLike] = useState(0);
+  const [isLike, setIsLike] = useState(false);
 
   const handleClick = () => {
-
-    if(!isLike){
-      setLike(1)
-      setIsLike(true)
-    }else{
-      setLike(0)
-      setIsLike(false)
+    if (!isLike) {
+      setLike(1);
+      setIsLike(true);
+    } else {
+      setLike(0);
+      setIsLike(false);
     }
-
-    
-  }
+  };
 
   return (
     <div className="App">
       <h1>Hello World</h1>
-      <div className='status-container'>
-        <div className='status-information'>
-          <h1>This is the founder of diaries , Hope that you are doing great , grinding your self to become WHAT YOU WANT IN LIFE!</h1>
+      <div className="status-container">
+        <div className="status-information">
+          <h1>
+            This is the founder of diaries , Hope that you are doing great 1,
+            grinding your self to become WHAT YOU WANT IN LIFE!
+          </h1>
         </div>
-        <div className='status-react-container'>
+        <div className="status-react-container">
           <h2>{like}</h2>
-          <button onClick={handleClick} >Like</button>
+          <button onClick={handleClick}>Like</button>
         </div>
       </div>
-
     </div>
   );
 }
