@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useFeed } from "../services/store/feedContext";
 
 export default function StatusForm() {
   const [content, setContent] = useState('thoughts');
+  const { feeds , dispatch } = useFeed()
 
   const onClickPost = async (e) => {
     const data = {
@@ -16,6 +18,10 @@ export default function StatusForm() {
     })
     if(response.ok){
       setContent('')
+      const data = await fetch('http://localhost:4000/api/diaries/')
+      const feedDatas = await data.json()
+      const feed = feedDatas.data[0]
+      dispatch({ type:'CREATE_FEED' , payload: feed})
     }
 
   };

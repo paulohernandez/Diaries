@@ -8,7 +8,7 @@ const router = require("./routes/userfeedsRoutes");
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.use("/api/diaries", router);
 
 app.listen(PORT, async () => {
