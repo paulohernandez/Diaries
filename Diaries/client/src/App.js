@@ -1,8 +1,6 @@
-import { useState } from "react";
 import "./App.css";
 import Status from "./components/Status";
 import StatusForm from "./components/StatusForm";
-
 function App() {
   return (
     <div className="App">

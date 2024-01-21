@@ -11,7 +11,7 @@ module.exports = class sqlfunction {
       );
       return { responsecode: 1 };
     } catch (error) {
-      return { responsecode: 0 };
+      return { responsecode: 0 , message:error};
     } finally {
       DB.release();
     }
@@ -24,9 +24,20 @@ module.exports = class sqlfunction {
       );
       return { responsecode: 1, data: query.recordset };
     } catch (error) {
-      return { responsecode: 0 };
+      return { responsecode: 0 , message:error};
     } finally {
       DB.release();
+    }
+  }
+  static async updateFeed(parameters){
+    const DB = await connectDb()
+    try {
+      const query = await DB.request().query(`UPDATE ${parameters.table} SET ${parameters.newValue} WHERE ${parameters.condition}`)
+      return { responsecode: 1 }
+    } catch (error) {
+      return {responsecode:0 , message:error}
+    }finally{
+      DB.release()
     }
   }
 };

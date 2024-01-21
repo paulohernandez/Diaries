@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { useFeed } from "../services/store/feedContext";
+import { genericGetRequest } from "../services/api/genericGetRequest";
+import { genericUpdateRequest } from "../services/api/genericUpdateRequest";
 
 export default function Status() {
   const { feeds , dispatch } = useFeed()
-  const [ isLike , setIsLike ] = useState(false)
+
   const fetchFeeds = async () => {
-    const response = await fetch('http://localhost:4000/api/diaries/')
-    const json = await response.json()
-    dispatch({ type: 'SET_FEEDS' , payload:json.data })
+    const response = await genericGetRequest('http://localhost:4000/api/diaries/')
+    dispatch({ type: 'SET_FEEDS' , payload:response.data })
   } 
 
-  const updateCountLikes = (id) => {
-    console.log(id);
-    
-    // fetchFeeds()
+  const updateCountLikes = async (id) => {
+    const data = {
+      feedId : id
+    }
+    const response = await genericUpdateRequest('http://localhost:4000/api/diaries/', data)
+    dispatch({ type: 'UPDATE_FEED' , payload:response.data })
+
   };
 
 useState(()=>{
