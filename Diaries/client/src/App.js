@@ -8,7 +8,7 @@ function App() {
       <h3>Unknown thoughts by someone</h3>
 
       <StatusForm />
-      <Status/>
+      <Status />
     </div>
   );
 }

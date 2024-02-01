@@ -6,7 +6,7 @@ import { FeedContextProvider } from "./services/store/feedContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <FeedContextProvider>
-      <App />
-    </FeedContextProvider>
+  <FeedContextProvider>
+    <App />
+  </FeedContextProvider>,
 );

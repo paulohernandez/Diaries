@@ -10,14 +10,21 @@ module.exports = class UserFeedsAPI {
       values: [`${content}`, 0, `${date}`],
       column: "dd_content,dd_likes,dd_date",
     };
-    try {
-      const insert = await sqlfunction.insert(insertParams);
-      if (insert.responsecode == 1) {
-        res.status(202).json({ message: "inserted" });
+
+    if(content == "" || content == undefined){
+      res.status(400).json({message:'blank content'})
+    }else{
+      try {
+        const insert = await sqlfunction.insert(insertParams);
+        if (insert.responsecode == 1) {
+          res.status(202).json({ message: "inserted" });
+        }
+      } catch (error) {
+        res.status(400).json({ message: error });
       }
-    } catch (error) {
-      res.status(400).json({ message: error });
     }
+
+    
   }
   static async fetchFeed(req, res) {
     try {
@@ -46,7 +53,13 @@ module.exports = class UserFeedsAPI {
       }
       const query = await sqlfunction.updateFeed(updateParams)
       if(query.responsecode == 1){
-        res.status(202).json({data:feedId})
+        const fetchParams = {
+          table:'dd_status',
+          condition:`dd_id = ${feedId}`
+        }
+        const singleQuery = await sqlfunction.fetchSingleData(fetchParams)
+        
+        res.status(202).json({data:singleQuery.data.recordset[0]})
       }
     } catch (error) {
       res.status(400).json({message:error})

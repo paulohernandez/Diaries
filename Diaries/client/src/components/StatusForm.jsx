@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 import { useFeed } from "../services/store/feedContext";
+import { genericGetRequest } from "../services/api/genericGetRequest";
+import { genericPostRequest } from "../services/api/genericPostRequest";
 
 export default function StatusForm() {
-  const [content, setContent] = useState('thoughts');
-  const { feeds , dispatch } = useFeed()
+  const [content, setContent] = useState("thoughts");
+  const {  dispatch } = useFeed();
 
   const onClickPost = async (e) => {
     const data = {
-      content:content
-    }
-    const response = await fetch('http://localhost:4000/api/diaries/' , {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify(data)
-    })
-    if(response.ok){
-      setContent('')
-      const data = await fetch('http://localhost:4000/api/diaries/')
-      const feedDatas = await data.json()
-      const feed = feedDatas.data[0]
-      dispatch({ type:'CREATE_FEED' , payload: feed})
-    }
+      content: content,
+    };
+    const response = await genericPostRequest("http://localhost:4000/api/diaries/", data)
 
+    if (response) {
+      setContent("");
+      const data = await genericGetRequest("http://localhost:4000/api/diaries/");
+      const feedDatas = data.data
+      dispatch({ type: "CREATE_FEED", payload: feedDatas[0] });
+    }
   };
-
 
   return (
     <div>
@@ -34,8 +28,7 @@ export default function StatusForm() {
         onChange={(e) => {
           setContent(e.target.value);
         }}
-      >
-      </textarea>
+      ></textarea>
       <button onClick={onClickPost}>POST</button>
     </div>
   );
