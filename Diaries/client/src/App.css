@@ -7,8 +7,9 @@
 .App{
   text-align: center;
 }
-.App h1{
+.App .companyName{
   font-weight: 400;
+  text-transform: uppercase;
 }
 .status-container{
   display: flex;
